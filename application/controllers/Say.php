@@ -12,6 +12,7 @@ class SayController extends Yaf_Controller_Abstract {
         if(!loginstatus())
         {
             $this->redirect(BASE_URL);
+            exit;
         }
 		$this->blogmodel = new BlogModel();
 		$this->saymodel = new SayModel();
@@ -54,7 +55,7 @@ class SayController extends Yaf_Controller_Abstract {
         $img3?$imgarr[]=$img3:'';
 
         $imgstr = empty($imgarr)?'':json_encode($imgarr);
-        $sayid = $this->saymodel->addsay($content,$imgstr);
+        $sayid = $this->saymodel->addsay(htmlspecialchars($content),$imgstr);
 
         if($sayid > 0)
         {

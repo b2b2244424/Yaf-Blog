@@ -1,13 +1,17 @@
 <?php
 
+/**
+ *
+ * Class Db
+ */
 Class Db
 {
 
-	private $link;
-	private $handle;
-	private $is_log;
-	private $time;
-	private $trans;
+	private $link;      //mysqli资源句柄
+	private $trans;     //事务
+    private $handle;    //日志文件资源句柄
+    private $is_log;    //是否记录日志
+    private $time;      //时间戳
 
 	//构造函数
 	public function __construct($db_config)
@@ -98,7 +102,7 @@ Class Db
 		}
 		while (list($key, $val) = each($dataArray))
 		{
-			$field .= "$key,";
+			$field .= "`$key`,";
 			$value .= "'$val',";
 		}
 		$field = substr($field, 0, -1);
@@ -129,7 +133,7 @@ Class Db
 		{
 			$nowtype = is_string($val)?'s':'i';
 			$paramarr[] = $val;
-			$field .= "$key,";
+			$field .= "`$key`,";
 			$safeparam .= "?,";
 			$paramsnum++;
 			$params .= $nowtype;         //之过滤字符串，int字形不用过滤
